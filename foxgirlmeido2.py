@@ -1,5 +1,15 @@
 import socket
 import sys
+import re
+
+def hello() :
+	irc.send("PRIVMSG " + channel + " :Hiiiiiii " + username + "! \n") 
+
+def okaeri() :
+	irc.send("PRIVMSG " + channel + " :Okaeri~ \n")
+
+def chirp() :
+	irc.send("PRIVMSG " + channel + " :\x01ACTION" + " chirps contentedly\x01\n")
 
 server = "chat.freenode.net"       #settings
 channel = "##dakimakura"
@@ -19,6 +29,7 @@ irc.send("JOIN "+ channel +"\n")        #join the chan
 
 
 
+
 while 1:    #puts it in a loop
 	text=irc.recv(2040)  #receive the text
 	print text   #print text to console
@@ -26,13 +37,21 @@ while 1:    #puts it in a loop
 	if text.find('PING') != -1:                          #check if 'PING' is found
 		irc.send('PONG ' + text.split() [1] + '\r\n') #returnes 'PONG' back to the server (prevents pinging out!)
 
-	if text.find(":Hi FoxgirlMeido") != -1 or text.find(":Hi foxgirlmeido") != -1 or text.find(":hi foxgirlmeido") != -1 or text.find(":hi FoxgirlMeido") != -1:
-		irc.send("PRIVMSG " + channel +  " :Hiiiiiii!  \n")
+	#p = re.compile(':' + '\s' + '!' + '\s' + '\S' + 'PRIVMSG' + '\S' + '\s' + '\S' + ':' + '\s', re.IGNORECASE)
+	
+	#parsemsg(p)
+
+
+
+	if text.find("hi FoxgirlMeido"):
+		hello
 		
-	if text.find(':!pat foxgirlmeido') != -1 or text.find(':!pat FoxgirlMeido') != -1:
-		irc.send("PRIVMSG " + channel + " :\x01ACTION chirps contentedly\x01\n")
+	if text.find('!pat foxgirlmeido') != -1 or text.find(':!pat FoxgirlMeido') != -1:
+		chirp
 
 	if text.find("JOIN #") != -1:
-		irc.send("PRIVMSG " + channel + " :Okaeri~ \n")
+		okaeri
+	
+
 	#if text.find("!grope foxgirlmeido") != -1 or text.find("!grope Foxgirlmeido") != -1:
 		#irc.send("PRIVMSG " + channel + " :\x01ACTION bites %s's hand.\x01\n") % 

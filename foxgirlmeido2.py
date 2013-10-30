@@ -2,19 +2,24 @@ import socket
 import sys
 import re
 
+
+server = "chat.freenode.net"
+channel = "##dakimakura"
+botnick = "FoxgirlMeido"
+
+
 def hello() :
 	irc.send("PRIVMSG " + channel + " :Hiiiiiii " + username + "! \n") 
 
 def okaeri() :
 	irc.send("PRIVMSG " + channel + " :Okaeri~ \n")
 
-def chirp() :
-	irc.send("PRIVMSG " + channel + " :\x01ACTION" + " chirps contentedly\x01\n")
+def chirps() :
+	irc.send("PRIVMSG " + channel + " :\x01ACTION chirps contentedly\x01\n")
 
 server = "chat.freenode.net"       #settings
 channel = "##dakimakura"
 botnick = "FoxgirlMeido"
-chirp = "chirps contentedly"
 
 irc = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #defines the socket
 print "connecting to:"+server
@@ -43,14 +48,14 @@ while 1:    #puts it in a loop
 
 
 
-	if text.find("hi FoxgirlMeido"):
-		hello
+	if text.find("hi FoxgirlMeido") != -1:
+		hello()
 		
 	if text.find('!pat foxgirlmeido') != -1 or text.find(':!pat FoxgirlMeido') != -1:
-		chirp
+		chirps()
 
 	if text.find("JOIN #") != -1:
-		okaeri
+		okaeri()
 	
 
 	#if text.find("!grope foxgirlmeido") != -1 or text.find("!grope Foxgirlmeido") != -1:

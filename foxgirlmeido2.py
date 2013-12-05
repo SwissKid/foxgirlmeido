@@ -7,6 +7,7 @@ server = "chat.freenode.net"
 channel = "##dakimakura"
 botnick = "FoxgirlMeido"
 
+#p = re.compile(':' + [a-z0-9] + '!~' + [a-z0-9] + '@' + [0-9\.] + ' PRIVMSG' + [\#a-z] + ':' + [a-z0-9], re.IGNORECASE)
 
 def hello() :
 	irc.send("PRIVMSG " + channel + " :Hiiiiiii " + username + "! \n") 
@@ -42,11 +43,12 @@ while 1:    #puts it in a loop
 	if text.find('PING') != -1:                          #check if 'PING' is found
 		irc.send('PONG ' + text.split() [1] + '\r\n') #returnes 'PONG' back to the server (prevents pinging out!)
 
-	#p = re.compile(':' + '\s' + '!' + '\s' + '\S' + 'PRIVMSG' + '\S' + '\s' + '\S' + ':' + '\s', re.IGNORECASE)
 	
-	#parsemsg(p)
+	p = re.compile(':\s!~\s@\.\w+PRIVMSG\#\w+:\s', re.IGNORECASE)
 
 
+	if re.match(p, "doge") != -1:
+		irc.send("PRIVMSG " + channel + " :yes \n") 
 
 	if text.find("hi FoxgirlMeido") != -1:
 		hello()
@@ -54,7 +56,7 @@ while 1:    #puts it in a loop
 	if text.find('!pat foxgirlmeido') != -1 or text.find(':!pat FoxgirlMeido') != -1:
 		chirps()
 
-	if text.find("JOIN #") != -1:
+	if text.find("JOIN #") != -1 & text.find("FoxgirlMeido") == -1:
 		okaeri()
 	
 

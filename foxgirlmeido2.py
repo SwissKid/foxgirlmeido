@@ -44,7 +44,7 @@ while 1:    #puts it in a loop
 		irc.send('PONG ' + text.split() [1] + '\r\n') #returnes 'PONG' back to the server (prevents pinging out!)
 
 	
-	p = re.compile(':\s!~\s@\.\w+PRIVMSG\#\w+:\s', re.IGNORECASE)
+	p = re.compile(':(\S+)!~(\S+)@(\S+) PRIVMSG (\#*\S+):(.*)', re.IGNORECASE)
 
 
 	if re.match(p, "doge") != -1:

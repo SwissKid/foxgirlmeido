@@ -32,6 +32,8 @@ irc.send("NICK "+ botnick +"\n")                            #sets nick
 
 irc.send("JOIN "+ channel +"\n")        #join the chan
 
+p = re.compile(':(\S+)!~(\S+)@(\S+) PRIVMSG (\#*\S+):(.*)', re.IGNORECASE)
+
 
 
 
@@ -39,15 +41,16 @@ irc.send("JOIN "+ channel +"\n")        #join the chan
 while 1:    #puts it in a loop
 	text=irc.recv(2040)  #receive the text
 	print text   #print text to console
-
+	
+	line = p.match(text)
+	
 	if text.find('PING') != -1:                          #check if 'PING' is found
 		irc.send('PONG ' + text.split() [1] + '\r\n') #returnes 'PONG' back to the server (prevents pinging out!)
 
 	
-	p = re.compile(':(\S+)!~(\S+)@(\S+) PRIVMSG (\#*\S+):(.*)', re.IGNORECASE)
 
 
-	if re.match(p, "doge") != -1:
+	if line.group(5) == "doge":
 		irc.send("PRIVMSG " + channel + " :yes \n") 
 
 	if text.find("hi FoxgirlMeido") != -1:
